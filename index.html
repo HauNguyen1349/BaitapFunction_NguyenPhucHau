@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Tập Hàm - Nguyễn Phúc Hậu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="main.js" defer></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+    <div class="flex flex-col items-center justify-center p-8">
+        <h1 class="text-3xl font-bold mb-4">Bài Tập Hàm - Nguyễn Phúc Hậu</h1>
+
+        <!-- Tab Navigation -->
+        <div class="flex items-center justify-center mb-4">
+            <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 dark:text-gray-400 space-x-2">
+                <li>
+                    <a href="javascript:void(0);"
+                        class="tab-btn inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100"
+                        onclick="showTab('admission')">Quản lý tuyển sinh</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);"
+                        class="tab-btn inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100"
+                        onclick="showTab('electricity')">Tính tiền điện</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);"
+                        class="tab-btn inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100"
+                        onclick="showTab('tax')">Thuế Thu Nhập Cá Nhân</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);"
+                        class="tab-btn inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100"
+                        onclick="showTab('cable')">Tính Tiền Cáp</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Quản lý tuyển sinh Function -->
+        <div id="admission" class="tab-content">
+            <h2 class="text-2xl font-bold mb-4">Quản lý tuyển sinh</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+                <div class="mb-4">
+                    <label>Điểm môn 1:</label>
+                    <input type="number" id="score1" class="w-full p-2 border rounded-md">
+                </div>
+                <div class="mb-4">
+                    <label>Điểm môn 2:</label>
+                    <input type="number" id="score2" class="w-full p-2 border rounded-md">
+                </div>
+                <div class="mb-4">
+                    <label>Điểm môn 3:</label>
+                    <input type="number" id="score3" class="w-full p-2 border rounded-md">
+                </div>
+                <div class="mb-4">
+                    <label>Khu vực:</label>
+                    <select id="area" class="w-full p-2 border rounded-md">
+                        <option value="0">Không ưu tiên</option>
+                        <option value="0.5">Khu vực 1</option>
+                        <option value="1">Khu vực 2</option>
+                        <option value="2">Khu vực 3</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label>Đối tượng ưu tiên:</label>
+                    <select id="priority" class="w-full p-2 border rounded-md">
+                        <option value="0">Không ưu tiên</option>
+                        <option value="1">Đối tượng 1</option>
+                        <option value="2">Đối tượng 2</option>
+                        <option value="3">Đối tượng 3</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label>Điểm chuẩn:</label>
+                    <input type="number" id="standard" class="w-full p-2 border rounded-md">
+                </div>
+                <button onclick="calculateResult()"
+                    class="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">Tính kết quả</button>
+                <div id="result" class="mt-4 text-center font-semibold"></div>
+            </div>
+        </div>
+
+        <!-- Tính Tiền Điện Function -->
+        <div id="electricity" class="tab-content hidden">
+            <h2 class="text-2xl font-bold mb-4 text-center">Tính tiền điện</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+                <div class="mb-4">
+                    <label class="block font-semibold">Họ tên:</label>
+                    <input type="text" id="name" class="w-full p-2 border rounded-md" placeholder="Nhập họ tên">
+                </div>
+
+                <div class="mb-4">
+                    <label class="block font-semibold">Số kWh tiêu thụ:</label>
+                    <input type="number" id="kw" class="w-full p-2 border rounded-md" placeholder="Nhập số kWh">
+                </div>
+
+                <button onclick="calculateElectricity()"
+                    class="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">Tính tiền điện</button>
+
+                <div id="electricity-result" class="mt-4 text-center text-lg font-semibold"></div>
+            </div>
+        </div>
+
+        <!-- Tính Thuế Thu Nhập Cá Nhân Function -->
+        <div id="tax" class="tab-content hidden">
+            <h2 class="text-2xl font-bold mb-4 text-center">Tính Thuế Thu Nhập Cá Nhân</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+                <div class="mb-4">
+                    <label class="block font-semibold">Tổng thu nhập năm (VND):</label>
+                    <input type="number" id="income" class="w-full p-2 border rounded-md"
+                        placeholder="Nhập tổng thu nhập">
+                </div>
+
+                <div class="mb-4">
+                    <label class="block font-semibold">Phương thức tính thuế:</label>
+                    <select id="taxMethod" class="w-full p-2 border rounded-md">
+                        <option value="fixed">Tính theo phần trăm cố định</option>
+                        <option value="tier">Tính theo từng bậc</option>
+                    </select>
+                </div>
+
+                <button onclick="calculateTax()"
+                    class="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">Tính
+                    thuế</button>
+
+                <div id="tax-result" class="mt-4 text-center text-lg font-semibold"></div>
+            </div>
+        </div>
+
+        <!-- Tính Tiền Cáp Function -->
+        <div id="cable" class="tab-content hidden">
+            <h2 class="text-2xl font-bold mb-4 text-center">Tính Tiền Cáp</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+                <div class="mb-4">
+                    <label class="block font-semibold">Loại khách hàng:</label>
+                    <select id="customerType" class="w-full p-2 border rounded-md" onchange="toggleConnectionInput()">
+                        <option value="residential">Nhà dân</option>
+                        <option value="business">Doanh nghiệp</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block font-semibold">Mã khách hàng:</label>
+                    <input type="text" id="customerCode" class="w-full p-2 border rounded-md"
+                        placeholder="Nhập mã khách hàng">
+                </div>
+
+                <div class="mb-4">
+                    <label class="block font-semibold">Số kênh cao cấp:</label>
+                    <input type="number" id="premiumChannels" class="w-full p-2 border rounded-md"
+                        placeholder="Nhập số kênh cao cấp">
+                </div>
+
+                <div class="mb-4 hidden" id="connectionSection">
+                    <label class="block font-semibold">Số kết nối (chỉ dành cho Doanh nghiệp):</label>
+                    <input type="number" id="connections" class="w-full p-2 border rounded-md"
+                        placeholder="Nhập số kết nối">
+                </div>
+
+                <button onclick="calculateCableFee()"
+                    class="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">Tính tiền cáp</button>
+
+                <div id="cable-result" class="mt-4 text-center text-lg font-semibold"></div>
+            </div>
+        </div>
+
+
+        <!-- JavaScript -->
+        <script src="script.js" defer></script>
+</body>
+
+</html>
